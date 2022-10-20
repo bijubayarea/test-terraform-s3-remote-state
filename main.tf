@@ -22,21 +22,12 @@ resource "aws_s3_bucket" "terraform_state" {
   }
 }
 
-/*
-resource "aws_s3_bucket" "terraform_state" {
-  bucket_prefix = "bijubayarea-s3-remote-backend-"
 
-  versioning {
-    enabled = true
-  }
-
-  force_destroy = true
-
-  // lifecycle {
-  //   prevent_destroy = true
-  // }
+resource "aws_s3_bucket_acl" "terraform_state_acl" {
+  bucket = aws_s3_bucket.terraform_state.id
+  acl    = "private"
 }
-*/
+
 
 resource "aws_dynamodb_table" "terraform_state_lock" {
   name           = "terraform-state-lock-dynamo"
